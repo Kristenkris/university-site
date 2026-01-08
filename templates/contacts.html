@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<section class="contacts-section">
+    <h1 class="section-title">Контакты</h1>
+
+    <div class="contacts-grid">
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Адрес</h3>
+            <p>г. Абакан, пр. Ленина, д. 92/1</p>
+            <p>Инженерно-технологический институт</p>
+        </div>
+
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+            </div>
+            <h3>Телефоны</h3>
+            <p>+7 (3902) 22-53-35</p>
+            <p>+7 (3902) 22-53-40</p>
+        </div>
+
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Электронная почта</h3>
+            <p>info@iti.khsu.ru</p>
+            <p>it@iti.khsu.ru</p>
+        </div>
+
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Режим работы</h3>
+            <p>Пн-Пт: 9:00-18:00</p>
+            <p>Сб: 10:00-14:00</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

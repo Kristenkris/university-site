@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Подача заявки на обучение{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admission.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="admission-container">
+    <div class="admission-header">
+        <h1 class="section-title">Подать заявку на обучение</h1>
+        <p class="section-subtitle">Заполните форму для поступления в Инженерно-технологический институт</p>
+    </div>
+
+    <!-- Индикатор прогресса -->
+    <div class="progress-indicator">
+        <div class="progress-fill"></div>
+    </div>
+
+    <!-- Шаги формы -->
+    <div class="admission-steps">
+        <div class="step active">
+            <span class="step-number">1</span>
+            <span class="step-text">Личные данные</span>
+        </div>
+        <div class="step">
+            <span class="step-number">2</span>
+            <span class="step-text">Образование</span>
+        </div>
+        <div class="step">
+            <span class="step-number">3</span>
+            <span class="step-text">Направление</span>
+        </div>
+        <div class="step">
+            <span class="step-number">4</span>
+            <span class="step-text">Подтверждение</span>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('submit_admission') }}" class="admission-form" enctype="multipart/form-data" id="admissionForm">
+        <!-- Личные данные -->
+        <fieldset class="form-section">
+            <legend><i class="fas fa-user"></i> Личные данные</legend>
+
+            <div class="form-row" style="display: flex; gap: 20px; margin-bottom: 20px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="last_name" class="required">
+                        <i class="fas fa-user-tag"></i> Фамилия
+                    </label>
+                    <input type="text" id="last_name" name="last_name" required
+                           class="form-control" placeholder="Введите фамилию"
+                           pattern="[А-Яа-яЁё\s\-]{2,}">
+                    <div class="validation-message">Пожалуйста, введите корректную фамилию</div>
+                </div>
+
+                <div class="form-group" style="flex: 1;">
+                    <label for="first_name" class="required">
+                        <i class="fas fa-user"></i> Имя
+                    </label>
+                    <input type="text" id="first_name" name="first_name" required
+                           class="form-control" placeholder="Введите имя"
+                           pattern="[А-Яа-яЁё\s\-]{2,}">
+                    <div class="validation-message">Пожалуйста, введите корректное имя</div>
+                </div>
+
+                <div class="form-group" style="flex: 1;">
+                    <label for="middle_name">
+                        <i class="fas fa-user-circle"></i> Отчество
+                    </label>
+                    <input type="text" id="middle_name" name="middle_name"
+                           class="form-control" placeholder="Введите отчество (при наличии)"
+                           pattern="[А-Яа-яЁё\s\-]{0,}">
+                </div>
+            </div>
+
+            <div class="form-row" style="display: flex; gap: 20px; margin-bottom: 20px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="birth_date" class="required">
+                        <i class="fas fa-birthday-cake"></i> Дата рождения
+                    </label>
+                    <input type="date" id="birth_date" name="birth_date" required
+                           class="form-control" min="1970-01-01" max="2008-12-31">
+                    <div class="validation-message">Вы должны быть не младше 16 лет</div>
+                </div>
+
+                <div class="form-group" style="flex: 1;">
+                    <label for="phone" class="required">
+                        <i class="fas fa-phone"></i> Телефон
+                    </label>
+                    <input type="tel" id="phone" name="phone" required
+                           class="form-control" placeholder="+7 (999) 123-45-67"
+                           pattern="\+7\s?[\(]?\d{3}[\)]?\s?\d{3}[\-]?\d{2}[\-]?\d{2}">
+                    <div class="validation-message">Введите номер в формате +7 (999) 123-45-67</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="required">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <input type="email" id="email" name="email" required
+                       class="form-control" placeholder="example@mail.ru"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div class="validation-message">Введите корректный email адрес</div>
+            </div>
+        </fieldset>
+
+        <!-- Образование -->
+        <fieldset class="form-section">
+            <legend><i class="fas fa-graduation-cap"></i> Образование</legend>
+
+            <div class="form-group">
+                <label for="education_level" class="required">
+                    <i class="fas fa-graduation-cap"></i> Уровень образования
+                </label>
+                <select id="education_level" name="education_level" required class="form-control">
+                    <option value="">Выберите уровень</option>
+                    <option value="secondary">Среднее общее (11 классов)</option>
+                    <option value="secondary_vocational">Среднее профессиональное</option>
+                    <option value="higher">Высшее</option>
+                </select>
+                <div class="validation-message">Пожалуйста, выберите уровень образования</div>
+            </div>
+
+            <div class="form-group">
+                <label for="school" class="required">
+                    <i class="fas fa-school"></i> Учебное заведение
+                </label>
+                    <input type="text" id="school" name="school" required
+                           class="form-control" placeholder="Название школы/колледжа/вуза">
+                <div class="validation-message">Пожалуйста, введите учебное заведение</div>
+            </div>
+
+            <div class="form-group">
+                <label for="graduation_year" class="required">
+                    <i class="fas fa-calendar-check"></i> Год окончания
+                </label>
+                <input type="number" id="graduation_year" name="graduation_year"
+                       min="2000" max="2025" required class="form-control"
+                       placeholder="2024">
+                <div class="validation-message">Введите год окончания (2000-2025)</div>
+            </div>
+        </fieldset>
+
+        <!-- Направление подготовки -->
+        <fieldset class="form-section">
+            <legend><i class="fas fa-book"></i> Направление подготовки</legend>
+
+            <div class="form-group">
+                <label for="program" class="required">
+                    <i class="fas fa-book-open"></i> Выберите программу
+                </label>
+                <select id="program" name="program" required class="form-control">
+                    <option value="">Выберите программу</option>
+                    <option value="09.03.01">09.03.01 - Информатика и вычислительная техника</option>
+                    <option value="09.03.02">09.03.02 - Информационные системы и технологии</option>
+                    <option value="09.04.01">09.04.01 - Информатика и вычислительная техника (магистратура)</option>
+                </select>
+                <div class="validation-message">Пожалуйста, выберите программу обучения</div>
+            </div>
+
+            <div class="form-group">
+                <label for="form_education" class="required">
+                    <i class="fas fa-chalkboard-teacher"></i> Форма обучения
+                </label>
+                <select id="form_education" name="form_education" required class="form-control">
+                    <option value="">Выберите форму</option>
+                    <option value="full-time">Очная</option>
+                    <option value="part-time">Заочная</option>
+                    <option value="evening">Очно-заочная</option>
+                </select>
+                <div class="validation-message">Пожалуйста, выберите форму обучения</div>
+            </div>
+        </fieldset>
+
+        <!-- Документы -->
+        <fieldset class="form-section">
+            <legend><i class="fas fa-file-upload"></i> Прикрепление документов</legend>
+
+            <div class="document-upload">
+                <div class="upload-item">
+                    <label for="passport">
+                        <i class="fas fa-passport"></i> Паспорт (первые страницы)
+                    </label>
+                    <input type="file" id="passport" name="passport" accept=".pdf,.jpg,.png,.jpeg"
+                           class="form-control" required>
+                    <small class="form-text">PDF, JPG или PNG, не более 5 МБ</small>
+                </div>
+
+                <div class="upload-item">
+                    <label for="diploma">
+                        <i class="fas fa-file-certificate"></i> Аттестат/диплом
+                    </label>
+                    <input type="file" id="diploma" name="diploma" accept=".pdf,.jpg,.png,.jpeg"
+                           class="form-control" required>
+                    <small class="form-text">PDF, JPG или PNG, не более 5 МБ</small>
+                </div>
+
+                <div class="upload-item">
+                    <label for="photo">
+                        <i class="fas fa-camera"></i> Фотография 3x4
+                    </label>
+                    <input type="file" id="photo" name="photo" accept=".jpg,.png,.jpeg"
+                           class="form-control" required>
+                    <small class="form-text">JPG или PNG, не более 10 МБ</small>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Согласия -->
+        <div class="form-section" style="border-left: 4px solid #4caf50;">
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="consent_data" name="consent_data" required
+                           class="form-check-input">
+                    <label for="consent_data" class="form-check-label required">
+                        <i class="fas fa-user-shield"></i>
+                        Я даю согласие на обработку персональных данных в соответствии с Федеральным законом №152-ФЗ
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="consent_rules" name="consent_rules" required
+                           class="form-check-input">
+                    <label for="consent_rules" class="form-check-label required">
+                        <i class="fas fa-file-contract"></i>
+                        Я ознакомлен(а) с правилами приёма и условиями обучения в Инженерно-технологическом институте
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопки -->
+        <div class="form-actions">
+            <button type="submit" class="btn-primary" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> Отправить заявку на обучение
+            </button>
+            <a href="{{ url_for('home') }}" class="btn-outline">
+                <i class="fas fa-times"></i> Отмена
+            </a>
+        </div>
+
+        <div class="form-note">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                После отправки заявки с вами свяжется сотрудник приёмной комиссии для уточнения деталей в течение 2 рабочих дней.
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}

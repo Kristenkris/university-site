@@ -1,0 +1,931 @@
+.site-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+/* Убедимся, что загрузка перекрывает всё */
+.loading-overlay {
+    position: fixed !important;
+    z-index: 9999 !important;
+}
+
+/* Общие стили для всего экрана */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Контейнеры на всю ширину */
+.container-wide {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.site-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 0;
+    border-bottom: 3px solid #3498db;
+    width: 100%;
+}
+
+header h1 {
+    margin-top: 10px;
+    font-size: 2.2rem;
+}
+
+/* Навигация */
+nav {
+    width: 100%;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    background-color: #3498db;
+}
+
+/* Основной контент */
+main {
+    background-color: white;
+    padding: 30px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    flex: 1;
+    width: 100%;
+}
+
+/* Секции */
+section {
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+section h2 {
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+/* Списки новостей */
+.news-list li {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 5px solid #3498db;
+    border-radius: 5px;
+    transition: transform 0.3s;
+}
+
+.news-list li:hover {
+    transform: translateX(5px);
+}
+
+.news-list h3 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.news-list small {
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* Формы */
+.login-form, .add-news-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Кнопки */
+button, .button-cancel {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 15px;
+    transition: background-color 0.3s;
+    min-height: 50px;
+}
+
+button:hover, .button-cancel:hover {
+    background-color: #2980b9;
+}
+
+.button-cancel {
+    background-color: #95a5a6;
+}
+
+.button-cancel:hover {
+    background-color: #7f8c8d;
+}
+
+/* Сообщения */
+.flash-messages {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.flash {
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+}
+
+.flash.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
+}
+
+/* Подвал */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    border-top: 2px solid #ddd;
+    background-color: #2c3e50;
+    color: white;
+    width: 100%;
+}
+
+/* Детальная страница новости */
+.news-detail .meta {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1em;
+}
+
+.news-detail .content {
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* Специфичные для шаблона вуза */
+.university-badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.academic-year {
+    font-size: 1rem;
+    color: var(--gray-color);
+    margin-left: 10px;
+}
+/* ===== ВЕРХНЯЯ ПАНЕЛЬ - ИСПРАВЛЕННЫЕ СТИЛИ ===== */
+.top-bar {
+    background: linear-gradient(135deg, #144308 0%, #2e7d32 100%);
+    padding: 20px 0;
+    border-bottom: 4px solid #ff9800;
+    box-shadow: 0 4px 20px rgba(0, 51, 102, 0.2);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.top-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+        #ff9800 0%,
+        #ffb74d 25%,
+        #ff9800 50%,
+        #ffb74d 75%,
+        #ff9800 100%);
+    animation: shimmer 3s infinite linear;
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+/* Основные кнопки навигации - ИСПРАВЛЕНО */
+.top-bar-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.top-bar-link {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    text-decoration: none;
+    padding: 14px 24px !important;
+    border-radius: 10px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    white-space: nowrap;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4) !important;
+    height: 50px !important;
+}
+
+.top-bar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent);
+    transition: left 0.6s;
+}
+
+.top-bar-link:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    color: white !important;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5) !important;
+    border-color: white !important;
+}
+
+.top-bar-link:hover::before {
+    left: 100%;
+}
+
+.top-bar-link i {
+    font-size: 18px !important;
+    transition: transform 0.3s ease;
+}
+
+.top-bar-link:hover i {
+    transform: scale(1.2);
+}
+
+/* Большие зелёные кнопки - ИСПРАВЛЕНО */
+.top-bar-action-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 30px 0;
+    gap: 35px;
+    padding: 0 20px;
+}
+
+.action-btn {
+    text-decoration: none;
+    padding: 28px 35px !important;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    min-height: 140px !important;
+    font-size: 1.3rem !important;
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    border: 3px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.2) 100%);
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.action-btn i {
+    font-size: 42px !important;
+    z-index: 2;
+    position: relative;
+    transition: transform 0.5s ease;
+    margin-bottom: 12px;
+    color: white !important;
+}
+
+.btn-text {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    display: block;
+    z-index: 2;
+    position: relative;
+    line-height: 1.1;
+    color: white !important;
+    text-align: center;
+    width: 100%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопка Расписание */
+.schedule-btn {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4) !important;
+}
+
+.schedule-btn:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255, 152, 0, 0.6) !important;
+}
+
+.schedule-btn:hover i {
+    transform: rotate(-10deg) scale(1.1);
+    animation: pulse 1s infinite;
+}
+
+/* Кнопка Подать заявку */
+.apply-btn {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4) !important;
+    border: 3px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255, 152, 0, 0.6) !important;
+}
+
+.apply-btn:hover i {
+    transform: translateX(5px) scale(1.1);
+    animation: float 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: rotate(-10deg) scale(1.1); }
+    50% { transform: rotate(-10deg) scale(1.2); }
+}
+
+@keyframes float {
+    0% { transform: translateX(5px) scale(1.1); }
+    100% { transform: translateX(5px) translateY(-5px) scale(1.1); }
+}
+
+/* Делаем кнопки одинаковой ширины */
+.top-bar-action-buttons .action-btn {
+    flex: 0 1 auto;
+    width: 320px;
+}
+
+/* Кнопка выхода */
+.logout-btn {
+    background: #dc3545 !important;
+    color: white !important;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    width: 45px;
+    height: 45px;
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.logout-btn:hover {
+    color: white !important;
+    background: #c82333 !important;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.4);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 1600px) {
+    .top-bar-action-buttons .action-btn {
+        width: 300px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .top-bar-action-buttons .action-btn {
+        width: 280px;
+    }
+
+    .top-bar-link {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .top-bar-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .top-bar-menu {
+        order: 1;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .top-bar-action-buttons {
+        order: 2;
+        margin: 20px 0;
+        gap: 25px;
+    }
+
+    .top-bar-auth {
+        order: 3;
+        margin: 0;
+    }
+
+    .action-btn i {
+        font-size: 36px !important;
+    }
+
+    .btn-text {
+        font-size: 22px !important;
+    }
+
+    .top-bar-action-buttons .action-btn {
+        width: 260px;
+    }
+}
+
+@media (max-width: 992px) {
+    .top-bar-action-buttons .action-btn {
+        width: 240px;
+        padding: 20px 25px !important;
+        min-height: 120px !important;
+    }
+
+    .btn-text {
+        font-size: 20px !important;
+    }
+
+    .action-btn i {
+        font-size: 32px !important;
+    }
+
+    .top-bar-link {
+        padding: 10px 18px !important;
+        font-size: 13px !important;
+        height: 45px !important;
+    }
+
+    .top-bar-link i {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        padding: 15px 0;
+    }
+
+    .top-bar-action-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 15px;
+    }
+
+    .action-btn {
+        min-height: 110px !important;
+        padding: 20px 25px !important;
+        width: 100% !important;
+        max-width: 450px;
+    }
+
+    .action-btn i {
+        font-size: 36px !important;
+    }
+
+    .btn-text {
+        font-size: 22px !important;
+    }
+
+    .top-bar-menu {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .top-bar-link {
+        width: 100%;
+        max-width: 350px;
+        justify-content: center;
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        height: 50px !important;
+    }
+
+    .top-bar-link i {
+        font-size: 18px !important;
+    }
+
+    .user-profile {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .top-bar-action-buttons {
+        padding: 0 10px;
+    }
+
+    .action-btn {
+        min-height: 100px !important;
+        padding: 18px 20px !important;
+    }
+
+    .action-btn i {
+        font-size: 32px !important;
+    }
+
+    .btn-text {
+        font-size: 20px !important;
+    }
+
+    .top-bar-link {
+        max-width: 320px;
+        padding: 12px 18px !important;
+        font-size: 14px !important;
+    }
+
+    .top-bar-link i {
+        font-size: 16px !important;
+    }
+}
+
+/* Анимация появления */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.top-bar-content > * {
+    animation: slideDown 0.6s ease-out;
+}
+
+.top-bar-menu .top-bar-link:nth-child(1) { animation-delay: 0.1s; }
+.top-bar-menu .top-bar-link:nth-child(2) { animation-delay: 0.2s; }
+.top-bar-menu .top-bar-link:nth-child(3) { animation-delay: 0.3s; }
+.top-bar-menu .top-bar-link:nth-child(4) { animation-delay: 0.4s; }
+.top-bar-action-buttons .schedule-btn { animation-delay: 0.5s; }
+.top-bar-action-buttons .apply-btn { animation-delay: 0.6s; }
+.top-bar-auth .user-profile { animation-delay: 0.7s; }
+
+/* ===== ДОПОЛНИТЕЛЬНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ВИДИМОСТИ ===== */
+
+/* Убедимся, что все тексты белые и видны */
+.top-bar * {
+    color: white !important;
+}
+
+/* Иконки в верхней панели */
+.top-bar i {
+    color: white !important;
+}
+
+/* Улучшаем контрастность текста */
+.top-bar .user-name,
+.top-bar .user-role {
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Кнопка меню (оранжевая) должна быть хорошо видна */
+.menu-button {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4) !important;
+    padding: 10px 20px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    height: 50px !important;
+}
+
+.menu-button:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5) !important;
+    border-color: white !important;
+}
+
+.menu-button i {
+    color: white !important;
+    font-size: 18px !important;
+}
+
+/* Кнопка для слабовидящих */
+.accessibility-btn-small {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4) !important;
+    padding: 12px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    height: 50px !important;
+}
+
+.accessibility-btn-small:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5) !important;
+    border-color: white !important;
+}
+
+.accessibility-btn-small i {
+    color: white !important;
+    font-size: 18px !important;
+}
+/* ===== СТИЛИ ДЛЯ КНОПКИ ВЫХОДА ===== */
+.top-bar-auth {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-avatar i {
+    font-size: 24px;
+    color: white;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.user-name {
+    color: white !important;
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.user-role {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 50% !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    font-size: 18px !important;
+    width: 45px !important;
+    height: 45px !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+    margin-left: 10px !important;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #bd2130 0%, #a71e2a 100%) !important;
+    transform: rotate(90deg) scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6) !important;
+}
+
+.logout-btn i {
+    color: white !important;
+}
+
+/* Быстрые ссылки в шапке (уже есть в шаблоне, убедимся в стилях) */
+.quick-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.quick-link {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.quick-link:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.quick-link i {
+    color: white !important;
+    font-size: 16px !important;
+}
+
+/* Адаптивность для кнопки выхода */
+@media (max-width: 768px) {
+    .top-bar-auth {
+        width: 100%;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .user-profile {
+        width: 100%;
+        max-width: 400px;
+        justify-content: space-between;
+    }
+
+    .quick-links {
+        justify-content: center;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-profile {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .user-info {
+        align-items: center;
+    }
+
+    .logout-btn {
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}

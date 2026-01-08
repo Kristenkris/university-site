@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Официальный сайт университета{% endblock %}</title>
+    <meta name="description" content="Официальный сайт университета. Информация для абитуриентов, студентов, сотрудников.">
+
+    <!-- CSS в правильном порядке -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accessibility.css') }}">
+
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts для молодёжного шрифта -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {% block head_extra %}{% endblock %}
+
+    <style>
+        /* Для главной страницы - МОЛОДЁЖНЫЙ СВЕТЛЫЙ ДИЗАЙН */
+        {% if request.endpoint == 'home' %}
+        /* Начальное состояние - показываем загрузку, скрываем контент */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', 'Poppins', sans-serif;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                #e8f5e9 0%,
+                #f1f8e9 25%,
+                #f9fbe7 50%,
+                #fffde7 75%,
+                #fff8e1 100%);
+        }
+
+        /* Абстрактные геометрические формы */
+        .geo-shape {
+            position: absolute;
+            opacity: 0.3;
+            filter: blur(40px);
+            animation: floatGeo 20s infinite ease-in-out;
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #a5d6a7, #c8e6c9);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #81c784, #a5d6a7);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #66bb6a, #81c784);
+            top: 50%;
+            right: -125px;
+            animation-delay: -10s;
+        }
+
+        .shape-4 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #4caf50, #66bb6a);
+            bottom: 20%;
+            left: -100px;
+            animation-delay: -15s;
+        }
+
+        /* Плавающие иконки технологий */
+        .tech-icon {
+            position: absolute;
+            font-size: 40px;
+            color: rgba(76, 175, 80, 0.2);
+            animation: floatIcon 15s infinite ease-in-out;
+        }
+
+        .tech-icon:nth-child(1) {
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .tech-icon:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            animation-delay: -3s;
+        }
+
+        .tech-icon:nth-child(3) {
+            bottom: 30%;
+            left: 25%;
+            animation-delay: -6s;
+        }
+
+        .tech-icon:nth-child(4) {
+            top: 40%;
+            right: 30%;
+            animation-delay: -9s;
+        }
+
+        /* Волновые линии */
+        .wave-line {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+            opacity: 0.4;
+            animation: waveMove 8s linear infinite;
+        }
+
+        .wave-1 {
+            top: 25%;
+            animation-delay: 0s;
+        }
+
+        .wave-2 {
+            top: 50%;
+            animation-delay: -2s;
+        }
+
+        .wave-3 {
+            top: 75%;
+            animation-delay: -4s;
+        }
+
+        /* Контент загрузки */
+        .loading-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #2e7d32;
+            z-index: 100;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            border: 3px solid #e8f5e9;
+            box-shadow:
+                0 20px 60px rgba(76, 175, 80, 0.15),
+                0 10px 30px rgba(76, 175, 80, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .loading-logo {
+            margin-bottom: 30px;
+        }
+
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 15px 35px rgba(76, 175, 80, 0.3),
+                inset 0 0 0 4px rgba(255, 255, 255, 0.8);
+            animation: pulseLogo 2s infinite ease-in-out;
+        }
+
+        .logo-circle i {
+            font-size: 60px;
+            color: white;
+        }
+
+        .loading-message h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #1b5e20;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-message .subtitle {
+            font-size: 18px;
+            color: #4caf50;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .loading-message p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loading-progress {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e8f5e9;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 2px solid #c8e6c9;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #a5d6a7, #4caf50, #2e7d32);
+            border-radius: 4px;
+            animation: progressFill 10s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        /* Информационные блоки */
+        .info-blocks {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .info-block {
+            text-align: center;
+            padding: 15px;
+            background: rgba(233, 245, 233, 0.6);
+            border-radius: 15px;
+            border: 2px solid #c8e6c9;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .info-block:hover {
+            transform: translateY(-5px);
+            background: rgba(200, 230, 201, 0.8);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.1);
+        }
+
+        .info-icon {
+            font-size: 24px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            color: #1b5e20;
+            font-weight: 600;
+        }
+
+        /* Анимации */
+        @keyframes floatGeo {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                border-radius: 50% 30% 70% 40%;
+            }
+            25% {
+                transform: translate(30px, -20px) rotate(90deg);
+                border-radius: 40% 60% 30% 70%;
+            }
+            50% {
+                transform: translate(-20px, 30px) rotate(180deg);
+                border-radius: 60% 40% 70% 30%;
+            }
+            75% {
+                transform: translate(-30px, -20px) rotate(270deg);
+                border-radius: 30% 70% 40% 60%;
+            }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg) scale(1.2);
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow:
+                    0 15px 35px rgba(76, 175, 80, 0.3),
+                    inset 0 0 0 4px rgba(255, 255, 255, 0.8);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow:
+                    0 20px 40px rgba(76, 175, 80, 0.4),
+                    inset 0 0 0 4px rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            10% { width: 15%; }
+            20% { width: 30%; }
+            30% { width: 45%; }
+            40% { width: 60%; }
+            50% { width: 70%; }
+            60% { width: 78%; }
+            70% { width: 85%; }
+            80% { width: 91%; }
+            90% { width: 96%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Контент изначально скрыт */
+        .site-wrapper {
+            opacity: 0;
+            animation: fadeInContent 1s ease 10s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInContent {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Скрываем загрузку через 10 секунд */
+        @keyframes hideLoading {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            90% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .loading-overlay {
+            animation: hideLoading 10s forwards;
+        }
+
+        {% else %}
+        /* Для остальных страниц - сразу показываем контент */
+        .loading-overlay {
+            display: none !important;
+        }
+
+        .site-wrapper {
+            opacity: 1;
+        }
+        {% endif %}
+    </style>
+</head>
+<body>
+    <!-- Индикатор загрузки (только для главной) -->
+    {% if request.endpoint == 'home' %}
+    <div class="loading-overlay">
+        <!-- Абстрактные геометрические формы -->
+        <div class="geo-shape shape-1"></div>
+        <div class="geo-shape shape-2"></div>
+        <div class="geo-shape shape-3"></div>
+        <div class="geo-shape shape-4"></div>
+
+        <!-- Плавающие иконки технологий -->
+        <div class="tech-icon"><i class="fas fa-laptop-code"></i></div>
+        <div class="tech-icon"><i class="fas fa-robot"></i></div>
+        <div class="tech-icon"><i class="fas fa-microchip"></i></div>
+        <div class="tech-icon"><i class="fas fa-network-wired"></i></div>
+
+        <!-- Волновые линии -->
+        <div class="wave-line wave-1"></div>
+        <div class="wave-line wave-2"></div>
+        <div class="wave-line wave-3"></div>
+
+        <!-- Контент загрузки -->
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-circle">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+
+            <div class="loading-message">
+                <h2>Инженерно-технологический институт</h2>
+                <div class="subtitle">ХГУ им. Н.Ф. Катанова</div>
+                <p>Создаём будущее вместе! Загружаем современную образовательную платформу для нового поколения инженеров и технологов.</p>
+
+                <div class="loading-progress">
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Загрузка системы</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-blocks">
+                    <div class="info-block">
+                        <div class="info-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="info-text">Студенты</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="info-text">Трудоустройство</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="info-text">Программы</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Основной контент -->
+    <div class="site-wrapper">
+        <!-- Остальная часть шаблона остается БЕЗ ИЗМЕНЕНИЙ -->
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="container-wide">
+                <div class="top-bar-content">
+                    <!-- Кнопка "Версия для слабовидящих" (маленькая оранжевая) -->
+                    <a href="/accessibility" class="accessibility-btn-small">
+                        <i class="fas fa-eye"></i> Версия для слабовидящих👁
+                    </a>
+
+                    <!-- Основные кнопки навигации -->
+                    <div class="top-bar-menu">
+                        <a href="{{ url_for('admission') }}" class="top-bar-link">
+                            <i class="fas fa-file-signature"></i> Приёмная комиссия
+                        </a>
+                        <a href="{{ url_for('faculties') }}" class="top-bar-link">
+                            <i class="fas fa-university"></i> Институты
+                        </a>
+                        <a href="{{ url_for('admission') }}" class="top-bar-link">
+                            <i class="fas fa-user-graduate"></i> Информация для поступающих
+                        </a>
+                        <a href="{{ url_for('education') }}" class="top-bar-link">
+                            <i class="fas fa-users"></i> Информация для обучающихся
+                        </a>
+
+                        <!-- Оранжевая кнопка меню с раскрывающимся списком -->
+                        <div class="menu-container">
+                            <button class="menu-button">
+                                <i class="fas fa-bars"></i> Меню
+                            </button>
+                            <div class="menu-dropdown">
+                                <a href="{{ url_for('svedeniya') }}"><i class="fas fa-info-circle"></i> Основные сведения</a>
+                                <a href="{{ url_for('documents') }}"><i class="fas fa-file-alt"></i> Документы</a>
+                                <a href="#"><i class="fas fa-building"></i> Материально-техническая база</a>
+                                <a href="#"><i class="fas fa-chalkboard-teacher"></i> Преподаватели</a>
+                                <a href="{{ url_for('faculties') }}"><i class="fas fa-university"></i> Факультеты</a>
+                                <a href="#"><i class="fas fa-sitemap"></i> Структура вуза</a>
+                                <a href="#"><i class="fas fa-user-tie"></i> Руководство</a>
+                                <a href="#"><i class="fas fa-graduation-cap"></i> Стипендии</a>
+                                <a href="#"><i class="fas fa-money-bill-alt"></i> Бюджетные места</a>
+                                <a href="#"><i class="fas fa-landmark"></i> Образовательные стандарты</a>
+                                <a href="#"><i class="fas fa-chart-line"></i> Платные услуги</a>
+                                <a href="#"><i class="fas fa-handshake"></i> Вакантные места</a>
+                                <a href="#"><i class="fas fa-balance-scale"></i> Финансово-хозяйственная деятельность</a>
+                                <a href="#"><i class="fas fa-shield-alt"></i> Противодействие коррупции</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Большие зелёные кнопки -->
+                    <div class="top-bar-action-buttons">
+                        <a href="{{ url_for('admission') }}" class="action-btn schedule-btn">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="btn-text">Расписание</span>
+                        </a>
+
+                        <a href="{{ url_for('admission') }}" class="action-btn apply-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span class="btn-text">Подать заявку на поступление</span>
+                        </a>
+                    </div>
+
+                    <!-- Кнопка выхода справа -->
+                    <div class="top-bar-auth">
+                        {% if user %}
+                            <div class="user-profile">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name">{{ user.username }}</span>
+                                    <span class="user-role">Администратор</span>
+                                </div>
+                                <a href="{{ url_for('logout') }}" class="logout-btn" title="Выйти">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шапка -->
+        <header class="main-header">
+            <div class="container-wide">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="{{ url_for('home') }}">
+                            <div class="logo-icon">
+                                <img src="{{ url_for('static', filename='images/logo.png') }}"
+                                    alt="Хакасский государственный университет им. Н.Ф. Катанова"
+                                    class="logo-img">
+                            </div>
+                            <div class="logo-text">
+                                <h1>Инженерно-технологический институт</h1>
+                                <p class="logo-subtitle">Хакасский государственный университет имени Н.Ф.Катанова</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="quick-links">
+                        {% if not user %}
+                            <a href="{{ url_for('register') }}" class="quick-link">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Регистрация</span>
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('news_list') }}" class="quick-link">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Новости</span>
+                        </a>
+                        {% if user and user.role == 'admin' %}
+                            <a href="{{ url_for('add_news') }}" class="quick-link">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Добавить новость</span>
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('login') if not user else url_for('logout') }}" class="quick-link">
+                            {% if user %}
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Выйти</span>
+                            {% else %}
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Вход для администратора</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Навигация с поиском -->
+        <nav class="main-navigation">
+            <div class="container-wide">
+                <div class="nav-with-search">
+                    <!-- Основное меню навигации -->
+                    <ul class="nav-list">
+                        <!-- Главная -->
+                        <li><a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}class="active"{% endif %}>
+                            <i class="fas fa-home"></i> Главная
+                        </a></li>
+
+                        <!-- Новости -->
+                        <li><a href="{{ url_for('news_list') }}" {% if request.endpoint == 'news_list' %}class="active"{% endif %}>
+                            <i class="fas fa-newspaper"></i> Новости
+                        </a></li>
+
+                        <!-- О нас -->
+                        <li><a href="/about" {% if request.path == '/about' %}class="active"{% endif %}>
+                            <i class="fas fa-info-circle"></i> О нас
+                        </a></li>
+
+                        <!-- Контакты -->
+                        <li><a href="/contacts" {% if request.path == '/contacts' %}class="active"{% endif %}>
+                            <i class="fas fa-envelope"></i> Контакты
+                        </a></li>
+
+                        <!-- Администрирование (только для админа) -->
+                        {% if user and user.role == 'admin' %}
+                        <li><a href="{{ url_for('add_news') }}" {% if request.endpoint == 'add_news' %}class="active"{% endif %}>
+                            <i class="fas fa-plus"></i> Добавить новость
+                        </a></li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Виджет поиска справа -->
+                    <div class="search-widget">
+                        <form action="{{ url_for('search') }}" method="GET" class="search-form">
+                            <input type="text" name="q" placeholder="Поиск по сайту..." value="{{ request.args.get('q', '') }}">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Flash сообщения -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages container-wide">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            <span class="flash-icon">
+                                {% if category == 'success' %}<i class="fas fa-check-circle"></i>
+                                {% elif category == 'error' %}<i class="fas fa-exclamation-circle"></i>
+                                {% else %}<i class="fas fa-info-circle"></i>
+                            {% endif %}
+                            </span>
+                            <span class="flash-text">{{ message }}</span>
+                            <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Закрыть">
+                                &times;
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Основной контент -->
+        <main id="main-content" class="main-content">
+            <div class="container-wide">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+        <!-- Подвал -->
+        <footer class="main-footer">
+            <div class="container-wide">
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Хакасский государственный университет имени Н.Ф.Катанова. Все права защищены.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        /* Анимация процентов */
+        {% if request.endpoint == 'home' %}
+        @keyframes progressPercent {
+            0% { content: "0%"; }
+            10% { content: "15%"; }
+            20% { content: "30%"; }
+            30% { content: "45%"; }
+            40% { content: "60%"; }
+            50% { content: "70%"; }
+            60% { content: "78%"; }
+            70% { content: "85%"; }
+            80% { content: "91%"; }
+            90% { content: "96%"; }
+            100% { content: "100%"; }
+        }
+
+        .progress-percent::after {
+            content: "0%";
+            animation: progressPercent 10s steps(10) forwards;
+        }
+        {% endif %}
+    </style>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Факультеты и кафедры{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1 class="section-title">Факультеты и кафедры</h1>
+
+    <div class="faculties-grid">
+        <!-- Факультет 1 -->
+        <div class="faculty-card">
+            <div class="faculty-header">
+                <h2>Департамент информационных технологий</h2>
+                <span class="faculty-badge">IT</span>
+            </div>
+            <div class="faculty-body">
+                <p>Подготовка специалистов в области программирования, анализа данных и информационной безопасности.</p>
+                <div class="faculty-details">
+                    <p><i class="fas fa-user-tie"></i> Декан: Иванов И.И.</p>
+                    <p><i class="fas fa-phone"></i> +7 (3902) 22-53-40</p>
+                    <p><i class="fas fa-envelope"></i> it@iti.khsu.ru</p>
+                </div>
+                <h3>Кафедры:</h3>
+                <ul>
+                    <li>Программная инженерия</li>
+                    <li>Информационная безопасность</li>
+                    <li>Прикладная математика</li>
+                </ul>
+            </div>
+            <div class="faculty-footer">
+                <a href="#" class="btn btn-sm">Подробнее</a>
+            </div>
+        </div>
+
+        <!-- Факультет 2 -->
+        <div class="faculty-card">
+            <div class="faculty-header">
+                <h2>Департамент строительства и архитектуры</h2>
+                <span class="faculty-badge">Строительство</span>
+            </div>
+            <div class="faculty-body">
+                <p>Подготовка инженеров-строителей, архитекторов и специалистов в области недвижимости.</p>
+                <div class="faculty-details">
+                    <p><i class="fas fa-user-tie"></i> Декан: Петров П.П.</p>
+                    <p><i class="fas fa-phone"></i> +7 (3902) 22-53-41</p>
+                    <p><i class="fas fa-envelope"></i> build@iti.khsu.ru</p>
+                </div>
+                <h3>Кафедры:</h3>
+                <ul>
+                    <li>Строительные конструкции</li>
+                    <li>Архитектура</li>
+                    <li>Геодезия</li>
+                </ul>
+            </div>
+            <div class="faculty-footer">
+                <a href="#" class="btn btn-sm">Подробнее</a>
+            </div>
+        </div>
+
+        <!-- Факультет 3 -->
+        <div class="faculty-card">
+            <div class="faculty-header">
+                <h2>Департамент машиностроения и транспорта</h2>
+                <span class="faculty-badge">Техника</span>
+            </div>
+            <div class="faculty-body">
+                <p>Подготовка инженеров для машиностроительной и транспортной отраслей.</p>
+                <div class="faculty-details">
+                    <p><i class="fas fa-user-tie"></i> Декан: Сидоров С.С.</p>
+                    <p><i class="fas fa-phone"></i> +7 (3902) 22-53-42</p>
+                    <p><i class="fas fa-envelope"></i> auto@iti.khsu.ru</p>
+                </div>
+                <h3>Кафедры:</h3>
+                <ul>
+                    <li>Машиностроение</li>
+                    <li>Транспортные системы</li>
+                    <li>Технология металлов</li>
+                </ul>
+            </div>
+            <div class="faculty-footer">
+                <a href="#" class="btn btn-sm">Подробнее</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

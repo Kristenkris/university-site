@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Документы{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1 class="section-title">Документы</h1>
+
+    <div class="documents-grid">
+        <div class="document-category">
+            <h2><i class="fas fa-file-contract"></i> Учредительные документы</h2>
+            <ul class="document-list">
+                <li>
+                    <i class="fas fa-file-pdf"></i>
+                    <a href="#">Устав университета</a>
+                    <span class="file-size">(PDF, 2.1 МБ)</span>
+                </li>
+                <li>
+                    <i class="fas fa-file-pdf"></i>
+                    <a href="#">Лицензия на образовательную деятельность</a>
+                    <span class="file-size">(PDF, 1.5 МБ)</span>
+                </li>
+                <li>
+                    <i class="fas fa-file-pdf"></i>
+                    <a href="#">Свидетельство о государственной аккредитации</a>
+                    <span class="file-size">(PDF, 1.8 МБ)</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="document-category">
+            <h2><i class="fas fa-graduation-cap"></i> Образовательные документы</h2>
+            <ul class="document-list">
+                <li>
+                    <i class="fas fa-file-word"></i>
+                    <a href="#">Основные образовательные программы</a>
+                    <span class="file-size">(DOCX, 850 КБ)</span>
+                </li>
+                <li>
+                    <i class="fas fa-file-excel"></i>
+                    <a href="#">Учебные планы</a>
+                    <span class="file-size">(XLSX, 1.2 МБ)</span>
+                </li>
+                <li>
+                    <i class="fas fa-file-pdf"></i>
+                    <a href="#">График учебного процесса</a>
+                    <span class="file-size">(PDF, 950 КБ)</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

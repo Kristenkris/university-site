@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Образовательные программы{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1 class="section-title">Образовательные программы</h1>
+
+    <div class="education-tabs">
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="bachelor">Бакалавриат</button>
+            <button class="tab-btn" data-tab="master">Магистратура</button>
+            <button class="tab-btn" data-tab="postgraduate">Аспирантура</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- Бакалавриат -->
+            <div class="tab-pane active" id="bachelor">
+                <div class="program-card">
+                    <h3>09.03.01 - Информатика и вычислительная техника</h3>
+                    <p><strong>Профиль:</strong> Программное обеспечение вычислительной техники и автоматизированных систем</p>
+                    <p><strong>Форма обучения:</strong> Очная</p>
+                    <p><strong>Срок обучения:</strong> 4 года</p>
+                    <p><strong>Квалификация:</strong> Бакалавр</p>
+                    <a href="#" class="btn btn-outline">Учебный план</a>
+                </div>
+
+                <div class="program-card">
+                    <h3>09.03.02 - Информационные системы и технологии</h3>
+                    <p><strong>Профиль:</strong> Информационные технологии в бизнесе</p>
+                    <p><strong>Форма обучения:</strong> Очная, Заочная</p>
+                    <p><strong>Срок обучения:</strong> 4 года</p>
+                    <p><strong>Квалификация:</strong> Бакалавр</p>
+                    <a href="#" class="btn btn-outline">Учебный план</a>
+                </div>
+            </div>
+
+            <!-- Магистратура -->
+            <div class="tab-pane" id="master">
+                <div class="program-card">
+                    <h3>09.04.01 - Информатика и вычислительная техника</h3>
+                    <p><strong>Направление:</strong> Системы искусственного интеллекта</p>
+                    <p><strong>Форма обучения:</strong> Очная</p>
+                    <p><strong>Срок обучения:</strong> 2 года</p>
+                    <p><strong>Квалификация:</strong> Магистр</p>
+                    <a href="#" class="btn btn-outline">Учебный план</a>
+                </div>
+            </div>
+
+            <!-- Аспирантура -->
+            <div class="tab-pane" id="postgraduate">
+                <div class="program-card">
+                    <h3>09.06.01 - Информатика и вычислительная техника</h3>
+                    <p><strong>Направление:</strong> Математическое моделирование, численные методы и комплексы программ</p>
+                    <p><strong>Форма обучения:</strong> Очная, Заочная</p>
+                    <p><strong>Срок обучения:</strong> 3-4 года</p>
+                    <p><strong>Квалификация:</strong> Исследователь. Преподаватель-исследователь</p>
+                    <a href="#" class="btn btn-outline">Программа аспирантуры</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

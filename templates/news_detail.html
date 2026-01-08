@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <article class="news-detail">
+        <h2>{{ news.title }}</h2>
+
+        <div class="meta">
+            <span>Опубликовано: {{ news.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+            {% if news.author %}
+                <span>Автор: {{ news.author.username }}</span>
+            {% endif %}
+        </div>
+
+        <div class="content">
+            {# Обрабатываем переносы строк #}
+            {% for paragraph in news.content.split('\n') %}
+                {% if paragraph.strip() %}
+                    <p>{{ paragraph }}</p>
+                {% if news.image_path %}
+                    <img src="{{ url_for('static', filename=news.image_path) }}"
+                    alt="{{ news.title }}">
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+        <a href="{{ url_for('news_list') }}" class="btn btn-outline">
+            ← Вернуться к списку новостей
+        </a>
+    </article>
+{% endblock %}

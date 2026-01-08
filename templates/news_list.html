@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="section-title">Все новости</h2>
+
+    {% if news %}
+        <div class="news-grid">
+            {% for item in news %}
+                <article class="news-card">
+                    <div class="news-card-header">
+                        <div class="news-date">
+                            {{ item.created_at.strftime('%d.%m.%Y') }}
+                        </div>
+                    </div>
+                    <div class="news-card-body">
+                        <h3 class="news-title">
+                            <a href="{{ url_for('news_detail', news_id=item.id) }}">{{ item.title }}</a>
+                        </h3>
+                        <p class="news-excerpt">
+                            {% if item.content|length > 150 %}
+                                {{ item.content[:150] }}...
+                            {% else %}
+                                {{ item.content }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="news-card-footer">
+                        <div class="news-meta">
+                            <small>Дата: {{ item.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+                            {% if item.author %}
+                                <small>Автор: {{ item.author.username }}</small>
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('news_detail', news_id=item.id) }}" class="news-read-more">
+                            Подробнее
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-newspaper fa-3x"></i>
+            <h3>Новостей пока нет</h3>
+            {% if user and user.role == 'admin' %}
+                <a href="{{ url_for('add_news') }}" class="btn btn-primary mt-4">
+                    <i class="fas fa-plus"></i> Добавить новость
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('home') }}" class="btn btn-outline">
+            ← На главную
+        </a>
+    </div>
+{% endblock %}

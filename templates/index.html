@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница - Официальный сайт университета{% endblock %}
+
+{% block content %}
+<!-- Герой-секция -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Добро пожаловать в Университет</h1>
+        <p class="hero-subtitle">Классическое образование в сочетании с инновационными технологиями</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('news_list') }}" class="btn btn-primary">
+                <i class="fas fa-newspaper"></i> Читать новости
+            </a>
+            {% if not user %}
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                    <i class="fas fa-sign-in-alt"></i> Вход для администратора
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+   <!-- Отладка - удалить после проверки -->
+<div style="display: none;">
+    <p>Количество новостей: {{ news|length }}</p>
+    <p>Категория новостей: {{ category }}</p>
+    <p>News list: {{ news }}</p>
+</div>
+<!-- Последние новости -->
+<section class="section">
+    <h2 class="section-title">Последние новости</h2>
+
+    <div class="news-grid">
+        {% if news %}
+            {% for item in news %}
+            <article class="news-card">
+                <div class="news-card-header">
+                    <div class="news-date">
+                        {{ item.created_at.strftime('%d.%m.%Y') }}
+                    </div>
+                </div>
+                <div class="news-card-body">
+                    <h3 class="news-title">
+                        <a href="{{ url_for('news_detail', news_id=item.id) }}">{{ item.title }}</a>
+                    </h3>
+                    <p class="news-excerpt">{{ item.content[:100] }}...</p>
+                </div>
+                <div class="news-card-footer">
+                    <a href="{{ url_for('news_detail', news_id=item.id) }}" class="news-read-more">
+                        Подробнее
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-newspaper fa-3x"></i>
+                <h3>Пока нет новостей</h3>
+                {% if user and user.role == 'admin' %}
+                    <a href="{{ url_for('add_news') }}" class="btn btn-primary mt-4">
+                        <i class="fas fa-plus"></i> Добавить первую новость
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if news %}
+    <div class="text-center mt-4">
+        <a href="{{ url_for('news_list') }}" class="btn btn-outline">
+            <i class="fas fa-list"></i> Все новости
+        </a>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Информация о системе -->
+<section class="section">
+    <h2 class="section-title">О системе</h2>
+
+    <div class="quick-links-grid">
+        <div class="quick-link-card">
+            <div class="quick-link-icon">
+                <i class="fas fa-database"></i>
+            </div>
+            <h3>Динамический контент</h3>
+            <p>Все новости хранятся в базе данных и управляются через административную панель</p>
+        </div>
+
+        <div class="quick-link-card">
+            <div class="quick-link-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Безопасность</h3>
+            <p>Система авторизации с хешированием паролей и разделением ролей</p>
+        </div>
+
+        <div class="quick-link-card">
+            <div class="quick-link-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Адаптивный дизайн</h3>
+            <p>Сайт корректно отображается на всех устройствах</p>
+        </div>
+    </div>
+</section>
+
+<!-- Контакты -->
+<section class="section">
+    <h2 class="section-title">Контактная информация</h2>
+
+    <div class="contacts-grid">
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Адрес</h3>
+            <p>г.Абакан, пр.Ленина, д.92/1</p>
+        </div>
+
+        <div class="contact-info-card">
+            <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+            </div>
+            <h3>Телефоны</h3>
+            <p>+7 (495) 123-45-67</p>
+            <p>+7 (495) 123-45-68</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

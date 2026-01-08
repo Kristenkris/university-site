@@ -1,0 +1,810 @@
+/* accessibility.css - Стили доступности для шаблон-системы вуза */
+
+/* ============================================
+   БАЗОВЫЕ НАСТРОЙКИ ДОСТУПНОСТИ
+   ============================================ */
+
+/* Высокая контрастность через псевдокласс :target */
+body:target {
+    scroll-margin-top: 100px;
+}
+
+/* Версия с высокой контрастностью */
+body:target#high-contrast {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+body:target#high-contrast * {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+body:target#high-contrast a {
+    color: #ffff00 !important;
+    text-decoration: underline !important;
+}
+
+body:target#high-contrast a:hover {
+    color: #ff9900 !important;
+}
+
+body:target#high-contrast button {
+    border: 2px solid #ffffff !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+body:target#high-contrast .btn {
+    border: 2px solid #ffffff !important;
+}
+
+/* Черно-белый режим */
+body:target#grayscale {
+    filter: grayscale(100%) !important;
+}
+
+/* Размеры шрифта через :target */
+body:target#font-small {
+    font-size: 14px !important;
+}
+
+body:target#font-medium {
+    font-size: 16px !important;
+}
+
+body:target#font-large {
+    font-size: 18px !important;
+}
+
+body:target#font-xlarge {
+    font-size: 20px !important;
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ СКРИНРИДЕРОВ
+   ============================================ */
+
+/* Скрыть элементы визуально, но оставить для скринридеров */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Скрыть декоративные элементы */
+.decorative {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ФОКУСА
+   ============================================ */
+
+/* Улучшенный фокус для клавиатурной навигации */
+*:focus {
+    outline: 3px solid #005fcc !important;
+    outline-offset: 2px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* Убрать outline для мыши, но оставить для клавиатуры */
+*:focus:not(:focus-visible) {
+    outline: none !important;
+}
+
+/* Стили для фокуса внутри навигации */
+.nav-list a:focus,
+.dropdown-label:focus {
+    background-color: rgba(26, 35, 126, 0.2) !important;
+    outline: 3px solid #ff9800 !important;
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ ФОРМ
+   ============================================ */
+
+/* Валидация форм */
+input:invalid,
+textarea:invalid,
+select:invalid {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
+}
+
+input:invalid:focus,
+textarea:invalid:focus,
+select:invalid:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Подсказки для обязательных полей */
+.form-group label.required::after {
+    content: " *";
+    color: #dc3545;
+}
+
+/* Увеличение области клика для чекбоксов и радио */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ ТАБЛИЦ
+   ============================================ */
+
+/* Улучшение читаемости таблиц */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Чередование строк для лучшей читаемости */
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ ССЫЛОК
+   ============================================ */
+
+/* Подчеркивание ссылок в контенте */
+.main-content a:not(.btn):not(.nav-list a):not(.dropdown-menu a) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.main-content a:not(.btn):not(.nav-list a):not(.dropdown-menu a):hover {
+    text-decoration-thickness: 2px;
+}
+
+/* Визуальные индикаторы для внешних ссылок */
+a[target="_blank"]::after {
+    content: " ↗";
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+/* ============================================
+   МЕДИА-ЗАПРОСЫ ДЛЯ ДОСТУПНОСТИ
+   ============================================ */
+
+/* Поддержка системных настроек контрастности */
+@media (prefers-contrast: custom) {
+    :root {
+        --primary-color: #000080;
+        --primary-dark: #000040;
+        --secondary-color: #800000;
+    }
+
+    .btn {
+        border: 2px solid currentColor !important;
+    }
+
+    .card, .news-card, .quick-link-card {
+        border: 2px solid var(--dark-color) !important;
+    }
+}
+
+/* Поддержка редукции движения */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-content h1,
+    .hero-subtitle,
+    .hero-buttons,
+    .hero-stats,
+    .fade-in,
+    .slide-in-left,
+    .slide-in-right,
+    .pulse,
+    .float {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .quick-link-card:hover,
+    .news-card:hover,
+    .faculty-card:hover,
+    .contact-info-card:hover {
+        transform: none !important;
+    }
+}
+
+/* Поддержка тёмной темы системы */
+@media (prefers-color-scheme: dark) {
+    body:not(:target#high-contrast) {
+        background-color: #121212 !important;
+        color: #e0e0e0 !important;
+    }
+
+    body:not(:target#high-contrast) .card,
+    body:not(:target#high-contrast) .news-card,
+    body:not(:target#high-contrast) .quick-link-card,
+    body:not(:target#high-contrast) .faculty-card,
+    body:not(:target#high-contrast) .contact-info-card {
+        background-color: #1e1e1e !important;
+        border-color: #333 !important;
+    }
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+   ============================================ */
+
+/* Увеличение области касания для мобильных */
+@media (max-width: 768px) {
+    .nav-list > li > a,
+    .dropdown-label,
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .accessibility-btn-small {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Увеличение отступов для пальцев */
+    .dropdown-menu li a {
+        padding: 1rem 1.5rem;
+    }
+}
+
+/* ============================================
+   СПЕЦИАЛЬНЫЕ ВИЗУАЛЬНЫЕ ПОДСКАЗКИ
+   ============================================ */
+
+/* Подсветка текущей страницы */
+.nav-list > li > a[aria-current="page"] {
+    font-weight: 700;
+    background-color: rgba(26, 35, 126, 0.1) !important;
+    position: relative;
+}
+
+.nav-list > li > a[aria-current="page"]::before {
+    content: "📍";
+    position: absolute;
+    left: 5px;
+    font-size: 0.8em;
+}
+
+/* Визуальные индикаторы для выпадающих меню */
+.dropdown-label[aria-expanded="true"]::after {
+    content: " (открыто)";
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+/* Индикатор загрузки для скринридеров */
+.loading[aria-busy="true"]::before {
+    content: "Загрузка... ";
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+/* ============================================
+   УЛУЧШЕНИЯ ДЛЯ КОНТЕНТА
+   ============================================ */
+
+/* Минимальная высота строки для лучшей читаемости */
+.main-content {
+    line-height: 1.6;
+}
+
+/* Улучшение читаемости длинного текста */
+.main-content p,
+.main-content li {
+    max-width: 70ch;
+}
+
+/* Отступы для заголовков */
+.main-content h2,
+.main-content h3,
+.main-content h4 {
+    margin-top: 2em;
+    scroll-margin-top: 80px;
+}
+
+/* Визуальное разделение разделов */
+.main-content section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.main-content section:last-child {
+    border-bottom: none;
+}
+
+/* ============================================
+   СПЕЦИАЛЬНЫЕ КЛАССЫ ДЛЯ РАЗНЫХ НУЖД
+   ============================================ */
+
+/* Увеличенный интервал между буквами для дислексии */
+.font-dyslexia-friendly {
+    font-family: "OpenDyslexic", "Comic Sans MS", sans-serif;
+    letter-spacing: 0.1em;
+    line-height: 1.8;
+}
+
+/* Упрощенный режим (минималистичный) */
+.simplified-mode * {
+    background: white !important;
+    color: black !important;
+    border-color: black !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.simplified-mode .decorative,
+.simplified-mode .hero-section::before,
+.simplified-mode .news-card-header::before,
+.simplified-mode .announcement-item::before,
+.simplified-mode .faculty-card::before,
+.simplified-mode .quick-link-card::before,
+.simplified-mode .contact-info-card::before {
+    display: none !important;
+}
+
+/* Режим для дальтоников */
+.colorblind-friendly .btn-primary {
+    background: linear-gradient(135deg, #003366, #0066cc) !important;
+}
+
+.colorblind-friendly .btn-secondary {
+    background: linear-gradient(135deg, #663300, #cc6600) !important;
+}
+
+.colorblind-friendly .flash-success {
+    background: linear-gradient(135deg, #006600, #009900) !important;
+}
+
+.colorblind-friendly .flash-error {
+    background: linear-gradient(135deg, #660000, #990000) !important;
+}
+
+/* ============================================
+   ОРАНЖЕВЫЕ КНОПКИ
+   ============================================ */
+
+.accessibility-btn-small {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4) !important;
+    padding: 12px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    height: 50px !important;
+}
+
+.accessibility-btn-small:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5) !important;
+    border-color: white !important;
+    color: white !important;
+}
+
+.menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-button {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4) !important;
+    padding: 12px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    height: 50px !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    gap: 10px !important;
+    transition: all 0.3s ease !important;
+}
+
+.menu-button:hover {
+    background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5) !important;
+    border-color: white !important;
+}
+
+/* Выпадающий список */
+.menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #1b5e20;
+    min-width: 280px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    display: none;
+    z-index: 1001;
+    margin-top: 10px;
+    border: 2px solid #2e7d32;
+    padding: 10px 0;
+}
+
+/* Показываем при наведении */
+.menu-container:hover .menu-dropdown {
+    display: block;
+}
+
+.menu-dropdown a {
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.menu-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.menu-dropdown a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    padding-left: 25px;
+}
+
+.menu-dropdown a:hover i {
+    color: #ff9800;
+}
+
+.menu-dropdown a i {
+    width: 18px;
+    text-align: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Для мобильных */
+@media (max-width: 768px) {
+    .menu-dropdown {
+        position: fixed;
+        left: 5%;
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+/* Стили для кнопки выхода */
+.logout-btn {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 50% !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    font-size: 18px !important;
+    width: 45px !important;
+    height: 45px !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+    margin-left: 10px !important;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #bd2130 0%, #a71e2a 100%) !important;
+    transform: rotate(90deg) scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6) !important;
+}
+
+/* ============================================
+   ВИДЖЕТ ПОИСКА СПРАВА
+   ============================================ */
+
+.nav-with-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.search-widget {
+    margin-left: auto;
+}
+
+.search-form {
+    display: flex;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 2px solid #4caf50;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    transition: all 0.3s ease;
+}
+
+.search-form:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+    border-color: #2e7d32;
+}
+
+.search-form input {
+    border: none;
+    padding: 10px 15px;
+    min-width: 200px;
+    font-size: 14px;
+    outline: none;
+    background: transparent;
+    color: #333;
+}
+
+.search-form input::placeholder {
+    color: #666;
+    opacity: 0.7;
+}
+
+.search-btn {
+    background: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background: #388e3c;
+}
+
+.search-btn i {
+    font-size: 16px;
+}
+
+/* ============================================
+   СТРАНИЦА ВЕРСИИ ДЛЯ СЛАБОВИДЯЩИХ
+   ============================================ */
+
+.accessibility-page {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.accessibility-page .accessibility-icon {
+    font-size: 80px;
+    color: #ff9800;
+    margin-bottom: 30px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.accessibility-page h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.accessibility-message {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    border-left: 4px solid #ff9800;
+}
+
+.accessibility-message h2 {
+    color: #1b5e20;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.accessibility-message p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ ДЛЯ НОВЫХ ЭЛЕМЕНТОВ
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .accessibility-btn-small {
+        font-size: 13px;
+        padding: 6px 12px;
+        margin-right: 10px;
+    }
+
+    .menu-button {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .search-form input {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-with-search {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-widget {
+        margin-left: 0;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .search-form {
+        width: 100%;
+    }
+
+    .search-form input {
+        min-width: auto;
+        flex-grow: 1;
+    }
+
+    .top-bar-content {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .accessibility-btn-small {
+        order: 1;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .top-bar-menu {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .top-bar-action-buttons {
+        order: 3;
+        width: 100%;
+    }
+
+    .top-bar-auth {
+        order: 4;
+    }
+}
+
+@media (max-width: 768px) {
+    .accessibility-btn-small {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .menu-container {
+        width: 100%;
+    }
+
+    .menu-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menu-dropdown {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    .menu-dropdown::before {
+        display: none;
+    }
+
+    .accessibility-page {
+        padding: 40px 15px;
+    }
+
+    .accessibility-page .accessibility-icon {
+        font-size: 60px;
+    }
+
+    .accessibility-page h1 {
+        font-size: 1.8rem;
+    }
+
+    .accessibility-message {
+        padding: 30px 20px;
+    }
+
+    .accessibility-message h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .accessibility-btn-small {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .search-form {
+        border-radius: 20px;
+    }
+
+    .search-form input {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .search-btn {
+        padding: 8px 16px;
+    }
+
+    .accessibility-page h1 {
+        font-size: 1.5rem;
+    }
+
+    .accessibility-message p {
+        font-size: 14px;
+    }
+}

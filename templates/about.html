@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Об институте 🏫{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <!-- Заголовок -->
+    <div class="text-center mb-5 fade-in">
+        <h1 class="section-title">Инженерно-технологический институт</h1>
+        <p class="section-subtitle">Факультет Хакасского государственного университета им. Н.Ф. Катанова</p>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="about-hero">
+        <div class="about-image-container slide-in-left">
+            <img src="{{ url_for('static', filename='images/iti-building.jpg') }}"
+                 alt="Современное здание Инженерно-технологического института"
+                 class="about-image">
+            <div class="image-overlay">
+                <div class="overlay-content">
+                    <i class="fas fa-university fa-3x mb-3"></i>
+                    <h3>С 1939 года</h3>
+                    <p>Традиции и инновации</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-intro slide-in-right">
+            <div class="intro-header">
+                <h2><i class="fas fa-star text-warning me-2"></i>Кратко об ИТИ</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="intro-content">
+                <p class="lead">Основан в 1939 году. Мы готовим специалистов мирового уровня в области информационных технологий и инженерии.</p>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span>Современные лаборатории</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span>Практико-ориентированное обучение</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span>Международные партнёрства</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span>Гарантированное трудоустройство</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Статистика -->
+    <div class="stats-section mt-5">
+        <h2 class="text-center mb-4">ИТИ в цифрах 📊</h2>
+        <div class="stats-grid">
+            <div class="stat-card fade-in delay-1">
+                <div class="stat-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Образовательных программ</div>
+                </div>
+                <div class="stat-desc">Бакалавриат, магистратура, аспирантура</div>
+            </div>
+
+            <div class="stat-card fade-in delay-2">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">700+</div>
+                    <div class="stat-label">Студентов</div>
+                </div>
+                <div class="stat-desc">Активно обучаются в текущем году</div>
+            </div>
+
+            <div class="stat-card fade-in delay-3">
+                <div class="stat-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Преподавателей</div>
+                </div>
+                <div class="stat-desc">Кандидаты и доктора наук</div>
+            </div>
+
+            <div class="stat-card fade-in delay-4">
+                <div class="stat-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Партнёров</div>
+                </div>
+                <div class="stat-desc">Ведущие IT-компании России</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Миссия -->
+    <div class="mission-section mt-5">
+        <div class="mission-card">
+            <div class="mission-header">
+                <h2><i class="fas fa-bullseye text-primary me-2"></i>Миссия ИТИ</h2>
+                <div class="mission-icon float">
+                    <i class="fas fa-rocket"></i>
+                </div>
+            </div>
+            <div class="mission-body">
+                <blockquote class="mission-quote">
+                    "Формирование нового поколения IT-специалистов, способных создавать и внедрять инновационные технологии в разных областях профессиональной деятельности."
+                </blockquote>
+                <div class="mission-highlights">
+                    <div class="highlight">
+                        <i class="fas fa-lightbulb text-warning"></i>
+                        <h4>Инновации</h4>
+                        <p>Внедрение передовых технологий обучения</p>
+                    </div>
+                    <div class="highlight">
+                        <i class="fas fa-graduation-cap text-primary"></i>
+                        <h4>Качество</h4>
+                        <p>Высокий уровень подготовки специалистов</p>
+                    </div>
+                    <div class="highlight">
+                        <i class="fas fa-globe text-success"></i>
+                        <h4>Интеграция</h4>
+                        <p>Международное сотрудничество и обмен опытом</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Призыв к действию -->
+    <div class="cta-section text-center mt-5">
+        <div class="cta-content">
+            <h3>Хочешь стать частью ИТИ?</h3>
+            <p>Присоединяйся к нашему сообществу инноваторов и технологических лидеров!</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn btn-primary btn-lg">
+                    <i class="fas fa-file-alt me-2"></i>Подать документы
+                </a>
+                <a href="/contact" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-calendar-alt me-2"></i>Записаться на экскурсию
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
